@@ -1,53 +1,26 @@
 import { Schema, model } from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
-import { ROLES } from "../utils/constants.js";
 
 const ProjectSchema = new Schema(
   {
-    username: {
+    admin: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    name: {
       type: String,
-      required: [true, "Username is required"],
-      unique: [true, "Username already taken"],
-      trim: true,
-      index: true,
-      lowercase: true,
+      required: [true, "Project name is required"],
     },
-    password: {
-      type: String,
-      required: [true, "Password is required"],
-      minlength: [true, "Password must be greater than 6 charcters"],
-    },
-    isEmailVerfied: {
-      type: Boolean,
-      default: false,
-    },
-    fullName: {
-      type: String,
-      required: [true, "Name is required"],
-      trim: true,
-      index: true,
-    },
-    avatar: {
-      public_id: String,
-      url: String,
-    },
-    role: {
-      type: String,
-      enum: Object.values(ROLES),
-      default: ROLES.MEMBER,
-    },
-    country: String,
-    phone: String,
-    bio: String,
-    refreshToken: String,
-    forgotPasswordToken: String,
-    forgotPasswordTokenExpiry: String,
-    verifyToken: String,
-    verifyTokenExpiry: String,
+    files: [
+      {
+        type: String,
+        required: [true, "File is required"],
+      },
+    ],
+    desc: String,
   },
   { timestamps: true }
 );
-
 
 ProjectSchema.plugin(mongoosePaginate);
 

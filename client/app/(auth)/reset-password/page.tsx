@@ -12,74 +12,61 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/forms";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { loginUser } from "@/API/auth";
+import { resetPassword } from "@/API/auth";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
-import { useAuth } from "@/store/AuthProvider";
+import { redirect, useRouter } from "next/navigation";
 
-export default function LoginForm() {
-  const [username, setUsername] = useState("");
+export default function ForgetPassword({
+  searchParams,
+}: {
+  searchParams: { token: string };
+}) {
+  const { token } = searchParams;
   const [password, setPassword] = useState("");
-
-  const { setUser } = useAuth();
+  const [cPassword, setCPassword] = useState("");
   const router = useRouter();
 
+  if (!token) redirect("/login");
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: loginUser,
+    mutationFn: resetPassword,
   });
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
-    if (!username) return toast.error("Username is required");
-    if (!password) return toast.error("Password is required");
+    if (!password) return toast.error("Email is required");
+    if (password.length < 6)
+      return toast.error("Password must be atleast 6 characters");
+    if (!/(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])/.test(password))
+      return toast.error(
+        "Password must contain at least one uppercase letter, one digit, and one special character"
+      );
+
+    if (password !== cPassword) return toast.error("Passwords do not match");
 
     const { success, response } = await mutateAsync({
-      username,
-      password,
+      newPassword: password,
+      token,
     });
     if (!success) return toast.error(response);
-    toast.success("Login success");
-
-    setUser(response.user);
-    localStorage.setItem("access-token", response.accessToken);
-    router.push("/");
+    else {
+      toast.success("Password updated");
+      router.push("/login");
+    }
   };
 
   return (
     <Card className="mx-auto max-w-sm w-full">
       <CardHeader>
-        <CardTitle className="text-2xl">Login</CardTitle>
+        <CardTitle className="text-2xl">Change Password</CardTitle>
         <CardDescription>
-          Enter your credentials below to login to your account
+          Change password to gain access to your account
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleLogin} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="username">Username</Label>
-            <Input
-              id="username"
-              type="text"
-              placeholder="johndoe"
-              required
-              name="username"
-              value={username}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setUsername(e.target.value)
-              }
-            />
-          </div>
-          <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
-              <Link
-                href="forgot-password"
-                className="ml-auto inline-block text-sm underline"
-              >
-                Forgot password?
-              </Link>
-            </div>
+            <Label htmlFor="password">Password</Label>
             <PasswordInput
               id="password"
               value={password}
@@ -91,14 +78,27 @@ export default function LoginForm() {
               name="password"
             />
           </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="password">Confirm Password</Label>
+            <PasswordInput
+              id="cpassword"
+              value={cPassword}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setCPassword(e.target.value)
+              }
+              required
+              autoComplete="confirm-password"
+              name="cpassword"
+            />
+          </div>
           <Button disabled={isPending} type="submit" className="w-full bg-bg">
-            Login
+            Reset Password
           </Button>
         </form>
         <div className="mt-4 text-center text-sm">
-          Don&apos;t have an account?{" "}
-          <Link href="/register" className="underline">
-            Sign up
+          <Link href="/login" className="underline">
+            Back to Login
           </Link>
         </div>
       </CardContent>

@@ -78,9 +78,9 @@ export const getCurrentUser = async () => {
   }
 };
 
-export const forgetPassword = async (email: string) => {
+export const forgotPassword = async (email: string) => {
   try {
-    const { data } = await api.post("/auth/forget-password", { email });
+    const { data } = await api.post("/auth/forgot-password", { email });
 
     return {
       success: true,

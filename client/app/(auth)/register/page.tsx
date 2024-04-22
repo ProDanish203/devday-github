@@ -16,7 +16,6 @@ import { registerUser } from "@/API/auth";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/store/AuthProvider";
 
 export default function RegisterForm() {
   const [info, setInfo] = useState({
@@ -34,7 +33,6 @@ export default function RegisterForm() {
     }));
   };
 
-  const { setUser } = useAuth();
   const router = useRouter();
 
   const { mutateAsync, isPending } = useMutation({

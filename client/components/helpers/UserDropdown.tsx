@@ -22,7 +22,7 @@ import { useEffect } from "react";
 export const UserDropdown = () => {
   const { user, setUser } = useAuth();
   const router = useRouter();
-  
+
   // Fetching current User
   const { data, isLoading } = useQuery({
     queryKey: ["current-user"],
@@ -50,8 +50,12 @@ export const UserDropdown = () => {
           className="rounded-full bg-bg text-text border-text border-2 hover:bg-bg/50"
         >
           <Avatar>
-            <AvatarImage src="/images/user.webp" alt="user" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage
+              src={user?.avatar?.url || "/images/user.webp"}
+              alt={user?.username || "user"}
+              className="object-cover"
+            />
+            <AvatarFallback>...</AvatarFallback>
           </Avatar>
           <span className="sr-only">Toggle user menu</span>
         </Button>

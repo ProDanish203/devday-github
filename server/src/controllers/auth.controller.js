@@ -238,7 +238,7 @@ export const verifyEmail = async (req, res, next) => {
     const user = await User.findById(req.user._id);
     if (!user) return next("User not found");
 
-    user.isEmailVerfied = true;
+    user.isEmailVerified = true;
     user.verifyToken = "";
     user.verifyTokenExpiry = "";
 

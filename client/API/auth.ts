@@ -135,7 +135,7 @@ export const sendVerifyLink = async () => {
   }
 };
 
-export const verifyEmail = async ({ token }: { token: string }) => {
+export const verifyEmail = async (token: string) => {
   try {
     const { data } = await api.post("/auth/verify-email", {
       token,
@@ -160,6 +160,23 @@ export const updateProfile = async (formData: FormData) => {
         "Content-Type": "multipart/form-data",
       },
     });
+
+    return {
+      success: true,
+      response: data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      response: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};
+
+
+export const logoutUser = async () => {
+  try {
+    const { data } = await api.post("/auth/logout");
 
     return {
       success: true,

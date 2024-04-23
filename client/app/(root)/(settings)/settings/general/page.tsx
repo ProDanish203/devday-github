@@ -63,11 +63,11 @@ const GeneralSettings = () => {
         fullName: user.fullName,
         username: user.username,
         email: user.email,
-        country: user.country,
-        bio: user.bio,
-        phone: user.phone,
+        country: user.country || "",
+        bio: user.bio || "",
+        phone: user.phone || "",
       });
-      setImage(user.avatar.url);
+      user?.avatar?.url && setImage(user.avatar.url);
     }
   }, [user]);
 
@@ -88,8 +88,10 @@ const GeneralSettings = () => {
     if (!info.fullName) return toast.error("Fullname is required");
     if (!/\s/.test(info.fullName))
       return toast.error("Please enter your full name (e.g., John Doe)");
-    if ((info.phone && info.phone.length > 11) || info.phone.length < 9)
-      return toast.error("Phone number must be atleast 9 to 11 digits");
+    if (info.phone) {
+      if (info.phone.length > 11 || info.phone.length < 9)
+        return toast.error("Phone number must be atleast 9 to 11 digits");
+    }
 
     const formData = new FormData();
     Object.entries(info).forEach(([key, value]) => {
@@ -170,7 +172,9 @@ const GeneralSettings = () => {
                 <SelectTrigger className="bg-bg text-text border-neutral-700">
                   <SelectValue
                     placeholder={
-                      info.country.length > 0 ? info.country : "Select country"
+                      info.country && info.country.length > 0
+                        ? info.country
+                        : "Select country"
                     }
                   ></SelectValue>
                 </SelectTrigger>

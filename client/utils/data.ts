@@ -5,9 +5,9 @@ export const settingsLinks = [
 ];
 
 export const navLink = [
-    { name: "Dashboard", path: "/" },
-    { name: "Projects", path: "/projects" },
-    { name: "Users", path: "/users" },
-    { name: "Settings", path: "/settings" },
-  ];
-  
+  { name: "Dashboard", path: "/" },
+  { name: "Projects", path: "/projects" },
+  { name: "Tasks", path: "/tasks" },
+  { name: "Users", path: "/users" },
+  { name: "Settings", path: "/settings" },
+];

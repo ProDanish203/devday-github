@@ -1,4 +1,6 @@
-import { Searchbar } from './Searchbar';
+import { Pagination } from './Pagination';
+import { Filter } from "./Filter";
+import { Searchbar } from "./Searchbar";
 import { UserAvatar } from "./UserAvatar";
 import { VerifyEmail } from "./VerifyEmail";
 import { UserDropdown } from "./UserDropdown";
@@ -12,4 +14,6 @@ export {
   VerifyEmail,
   UserAvatar,
   Searchbar,
+  Filter,
+  Pagination
 };

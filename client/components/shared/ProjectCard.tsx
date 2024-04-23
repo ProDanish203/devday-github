@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 export const ProjectCard = () => {
   return (
-    <div className=" bg-white h-fit rounded-lg shadow-sm dark:bg-gray-950">
+    <div className="max-w-[450px]  bg-white h-fit rounded-lg shadow-sm dark:bg-gray-950">
       <div className="p-4">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold">Project A</h3>

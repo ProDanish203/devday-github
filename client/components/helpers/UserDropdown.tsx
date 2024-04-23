@@ -64,7 +64,7 @@ export const UserDropdown = () => {
         <DropdownMenuLabel className="text-text">My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="text-text hover:!bg-neutral-800 hover:!text-text">
-          <Link href="/settings/general">Settings</Link>
+          <Link href="/settings">Settings</Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="text-text hover:!bg-neutral-800 hover:!text-text">
           <LogoutBtn />

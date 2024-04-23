@@ -110,11 +110,15 @@ const GeneralSettings = () => {
     <main className="w-full">
       <section className="md:container max-md:w-full ">
         <Card className="w-full max-w-3xl bg-bg border-none">
-          <CardHeader className="max-sm:px-0">
-            <CardTitle className="text-text">Update Profile</CardTitle>
-            <CardDescription>Manage your profile information.</CardDescription>
+          <CardHeader>
+            <CardTitle className="sm:text-4xl text-2xl text-text font-semibold mb-1">
+              Update Profile
+            </CardTitle>
+            <CardDescription className="text-para text-sm w-full">
+              Manage your profile information.
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4 max-sm:p-0">
+          <CardContent className="space-y-4">
             <div className="space-y-2">
               <ImageUpload
                 placeholder="Update Avatar"

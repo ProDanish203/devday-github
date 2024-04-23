@@ -153,15 +153,13 @@ export const verifyEmail = async ({ token }: { token: string }) => {
   }
 };
 
-export const updateProfile = async (info: {
-  firstName: string;
-  lastName: string;
-  username: string;
-  email: string;
-  password: string;
-}) => {
+export const updateProfile = async (formData: FormData) => {
   try {
-    const { data } = await api.put("/user/admin-info", info);
+    const { data } = await api.put("/user/update", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     return {
       success: true,

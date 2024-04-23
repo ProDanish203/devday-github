@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "../globals.css";
-import { Toaster } from "sonner";
-import Image from "next/image";
+import "../../globals.css";
 import ReactQueryProvider from "@/store/ReactQueryProvider";
 import { AuthProvider } from "@/store/AuthProvider";
+import { SettingsDashboard } from "@/components/shared";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,23 +23,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReactQueryProvider>
           <AuthProvider>
-            <main className="flex flex-col md:flex-row md:min-h-screen">
+            <main className="bg-bg min-h-screen">
               <Toaster position="top-right" richColors />
-              {/* Left Section */}
-              <div className="flex-1 relative hidden md:block">
-                <Image
-                  src="/images/auth.jpg"
-                  alt="Authentication"
-                  width={1500}
-                  height={1500}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              </div>
-
-              {/* Right Section */}
-              <div className="flex-1 flex items-center justify-center bg-bg p-4 sm:p-8 md:p-16 min-h-screen">
-                {children}
-              </div>
+              <SettingsDashboard>{children}</SettingsDashboard>
             </main>
           </AuthProvider>
         </ReactQueryProvider>

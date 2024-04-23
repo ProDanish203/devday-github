@@ -19,10 +19,10 @@ const config = {
     },
     extend: {
       colors: {
-        primaryCol: "#b07af3",
-        secondaryCol: "#a30f91",
-        accentCol: "#eb20ac",
-        text: "#ebe3f3",
+        primaryCol: "#7779f8",
+        secondaryCol: "#25258e",
+        accentCol: "#4545da",
+        text: "#e8e8e9",
         bg: "#070409",
         para: "#bcb6c2",
         border: "hsl(var(--border))",

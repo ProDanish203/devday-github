@@ -19,7 +19,7 @@ export default function Dashboard() {
             </p>
           </div>
           <div className="flex gap-2">
-            <Suspense>
+            <Suspense fallback={<p>...</p>}>
               <Filter />
             </Suspense>
             <AddProject />

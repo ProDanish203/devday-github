@@ -5,8 +5,8 @@ import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebounce } from "@uidotdev/usehooks";
 
-export const Searchbar = ({ initialValue }: { initialValue: string }) => {
-  const [value, setValue] = useState(initialValue);
+export const Searchbar = () => {
+  const [value, setValue] = useState("");
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();

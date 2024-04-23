@@ -37,7 +37,7 @@ const UserPage = ({ searchParams }: SearchParams) => {
             </p>
           </div>
           <div>
-            <Suspense>
+            <Suspense fallback={<p>...</p>}>
               <Filter />
             </Suspense>
           </div>
@@ -61,7 +61,9 @@ const UserPage = ({ searchParams }: SearchParams) => {
         </main>
       </section>
       {data && data.success && data.response.pagination && (
-        <Pagination data={data.response.pagination} />
+        <Suspense fallback={<p>...</p>}>
+          <Pagination data={data.response.pagination} />
+        </Suspense>
       )}
     </>
   );

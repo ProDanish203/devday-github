@@ -1,6 +1,7 @@
 import { AddProject } from "@/components/forms";
 import { Filter, Pagination } from "@/components/helpers";
 import { ProjectCard } from "@/components/shared";
+import { Suspense } from "react";
 
 const ProjectsPage = () => {
   return (
@@ -17,7 +18,9 @@ const ProjectsPage = () => {
             </p>
           </div>
           <div className="flex gap-2">
-            <Filter />
+            <Suspense fallback={<p>...</p>}>
+              <Filter />
+            </Suspense>
             <AddProject />
           </div>
         </div>

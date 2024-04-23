@@ -14,8 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 const VerifyPage = ({ searchParams }: { searchParams: { token: string } }) => {
   const { token } = searchParams;

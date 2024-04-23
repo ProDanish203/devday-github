@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { Searchbar, UserDropdown, VerifyEmail } from "@/components/helpers";
 import { useAuth } from "@/store/AuthProvider";
 import { Button } from "@/components/ui/button";
@@ -20,8 +20,6 @@ import { usePathname, useSearchParams } from "next/navigation";
 export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const search = searchParams.get("search");
   return (
     <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r border-neutral-700 lg:block bg-bg/80 sticky top-0 left-0 h-screen">
@@ -184,7 +182,9 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <Searchbar initialValue={search || ""} />
+            <Suspense fallback={<p>...</p>}>
+              <Searchbar />
+            </Suspense>
           </div>
           <UserDropdown />
         </header>

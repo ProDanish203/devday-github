@@ -17,6 +17,7 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/store/AuthProvider";
+import Cookies from "js-cookie";
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
@@ -42,6 +43,7 @@ export default function LoginForm() {
     toast.success("Login success");
 
     setUser(response.user);
+    Cookies.set("accessToken", response.accessToken, { expires: 7 });
     localStorage.setItem("access-token", response.accessToken);
     router.push("/");
   };

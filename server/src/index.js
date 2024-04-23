@@ -1,9 +1,50 @@
 import { config } from "dotenv";
 import { connDb } from "./config/db.js";
-import { app } from "./app.js";
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import cookieParser from "cookie-parser";
+// Middlewares
+import { errorMiddleware } from "./middlewares/error.middleware.js";
+// Routes
+import authRoute from "./routes/auth.route.js";
+import userRoute from "./routes/user.route.js";
 
 // .env config
 config();
+
+const app = express();
+
+const corsOptions = {
+    credentials: true,
+    origin:
+        process.env.NODE_ENV === "production"
+            ? "https://github-devday.vercel.app"
+            : "http://localhost:3000",
+};
+
+app.use(cors(corsOptions));
+app.use(express.json({ limit: "16kb" }));
+app.use(express.static("public"));
+// For url inputs
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(morgan("dev"));
+app.use(cookieParser());
+app.disable("x-powered-by");
+
+app.get("/", (req, res) => {
+    res.status(200).json({
+        message: "Devday-github API",
+    })
+})
+
+// Routes
+app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/user", userRoute);
+
+// Custom middleware for errors
+app.use(errorMiddleware);
+
 
 const port = process.env.PORT || 5000;
 
@@ -16,3 +57,5 @@ connDb()
     .catch((error) => {
         console.log(`Database Connection Error: ${error}`);
     });
+
+export default app;

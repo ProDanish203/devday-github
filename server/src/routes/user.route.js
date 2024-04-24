@@ -1,10 +1,11 @@
 import { Router } from "express";
 import {
-    deleteUser,
-    getAllUsers,
-    getCurrentUser,
-    getSingleUser,
-    updateProfile,
+  deleteUser,
+  getAllUsers,
+  getCurrentUser,
+  getSingleUser,
+  readNotifcations,
+  updateProfile,
 } from "../controllers/user.controller.js";
 import { verifyAuth } from "../middlewares/auth.middleware.js";
 import { ROLES } from "../utils/constants.js";
@@ -17,10 +18,16 @@ router.get("/profile/:id", getSingleUser);
 router.get("/current-user", verifyAuth(Object.values(ROLES)), getCurrentUser);
 
 router.put(
-    "/update",
-    verifyAuth(Object.values(ROLES)),
-    upload.single("avatar"),
-    updateProfile
+  "/update",
+  verifyAuth(Object.values(ROLES)),
+  upload.single("avatar"),
+  updateProfile
+);
+
+router.put(
+  "/read-notifications",
+  verifyAuth(Object.values(ROLES)),
+  readNotifcations
 );
 
 // Incomplete

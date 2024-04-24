@@ -119,6 +119,26 @@ export const updateProfile = async (req, res, next) => {
   }
 };
 
+export const readNotifcations = async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        hasNotifications: false,
+      },
+      { new: true }
+    );
+    return res.status(200).json({
+      success: true,
+      message: "Notifications read",
+      data: "",
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
 export const deleteUser = async (req, res, next) => {
   try {
   } catch (error) {

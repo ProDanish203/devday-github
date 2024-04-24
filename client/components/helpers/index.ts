@@ -1,4 +1,5 @@
-import { Pagination } from './Pagination';
+import { Heading } from "./Heading";
+import { Pagination } from "./Pagination";
 import { Filter } from "./Filter";
 import { Searchbar } from "./Searchbar";
 import { UserAvatar } from "./UserAvatar";
@@ -15,5 +16,6 @@ export {
   UserAvatar,
   Searchbar,
   Filter,
-  Pagination
+  Pagination,
+  Heading,
 };

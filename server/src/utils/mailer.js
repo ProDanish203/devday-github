@@ -3,33 +3,33 @@ import bcrypt from "bcrypt";
 import { User } from "../models/user.model.js";
 
 export const sendVerificationMail = async ({ type, email, userId }) => {
-    try {
-        const token = await bcrypt.hash(userId.toString(), 10);
-        if (!token) return;
+  try {
+    const token = await bcrypt.hash(userId.toString(), 10);
+    if (!token) return;
 
-        if (type === "VERIFY") {
-            await User.findByIdAndUpdate(userId, {
-                verifyToken: token,
-                verifyTokenExpiry: Date.now() + 3600000,
-            });
-        } else if (type === "RESET") {
-            await User.findByIdAndUpdate(userId, {
-                forgotPasswordToken: token,
-                forgotPasswordTokenExpiry: Date.now() + 3600000,
-            });
-        } else return;
+    if (type === "VERIFY") {
+      await User.findByIdAndUpdate(userId, {
+        verifyToken: token,
+        verifyTokenExpiry: Date.now() + 3600000,
+      });
+    } else if (type === "RESET") {
+      await User.findByIdAndUpdate(userId, {
+        forgotPasswordToken: token,
+        forgotPasswordTokenExpiry: Date.now() + 3600000,
+      });
+    } else return;
 
-        const transporter = await nodemailer.createTransport({
-            pool: true,
-            service: "gmail",
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.PASSWORD,
-            },
-        });
+    const transporter = await nodemailer.createTransport({
+      pool: true,
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
 
-        const subject = `Github | ${type === "VERIFY" ? "Verify your email" : "Reset password"}`;
-        const html = `
+    const subject = `Github | ${type === "VERIFY" ? "Verify your email" : "Reset password"}`;
+    const html = `
         <!DOCTYPE html>
         <html>
         <head>
@@ -73,16 +73,91 @@ export const sendVerificationMail = async ({ type, email, userId }) => {
         </html>
         `;
 
-        const mailOptions = {
-            from: "danishsidd203@gmail.com",
-            to: email,
-            html,
-            subject,
-        };
+    const mailOptions = {
+      from: "danishsidd203@gmail.com",
+      to: email,
+      html,
+      subject,
+    };
 
-        const mailResponse = await transporter.sendMail(mailOptions);
-        return mailResponse;
-    } catch (error) {
-        throw new Error(error.message);
-    }
+    const mailResponse = await transporter.sendMail(mailOptions);
+    return mailResponse;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+export const sendPasscodeMail = async ({ email, projectName, passCode }) => {
+  try {
+    const transporter = await nodemailer.createTransport({
+      pool: true,
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const subject = `Github | Your Passcode to join ${projectName}`;
+    const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login with code</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f2f2f2;
+                padding: 20px;
+            }
+            .container {
+                background-color: white;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                text-align: center;
+            }
+            .code {
+                font-size: 28px;
+                font-weight: bold;
+                padding: 30px 10px;
+                background-color: #333;
+                color: #fff;
+                display: grid;
+                place-items: center;
+                margin: 20px auto;
+                border-radius: 10px;
+                width: 350px;
+                text-align: center;
+            }
+            h1{
+                font-size: 20px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Login to ${projectName}</h1>
+            <div class="code">${passCode}</div>
+            <p>Copy and paste the temporary verification code to log in. If you didn't try to sign in, you can safely ignore this email.</p>
+            <p>GITHUB</p>
+        </div>
+    </body>
+    </html>
+`;
+
+    const mailOptions = {
+      from: "danishsidd203@gmail.com",
+      to: email,
+      html,
+      subject,
+    };
+
+    const mailResponse = await transporter.sendMail(mailOptions);
+    return mailResponse;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };

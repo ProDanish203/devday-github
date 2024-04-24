@@ -1,6 +1,6 @@
 "use client";
 import { getUsers } from "@/API/users";
-import { Filter, Pagination } from "@/components/helpers";
+import { Filter, Heading, Pagination } from "@/components/helpers";
 import { UserCard } from "@/components/shared";
 import { UserSkeleton } from "@/components/skeletons";
 import { UserTypes } from "@/lib/types";
@@ -27,15 +27,11 @@ const UserPage = ({ searchParams }: SearchParams) => {
     <>
       <section className="my-5">
         <div className="p-6 flex max-md:flex-col md:items-center gap-y-5 justify-between">
-          <div>
-            <h2 className="sm:text-4xl text-2xl text-text font-semibold mb-1">
-              Explore Users
-            </h2>
-            <p className="text-para text-sm w-full">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem,
-              dolore?
-            </p>
-          </div>
+          <Heading
+            title="Explore Users"
+            desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem,
+              dolore?"
+          />
           <div>
             <Suspense fallback={<p>...</p>}>
               <Filter />

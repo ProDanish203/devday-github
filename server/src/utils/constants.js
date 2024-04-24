@@ -3,6 +3,12 @@ export const ROLES = Object.freeze({
   MEMBER: "member",
 });
 
+export const STATUS = Object.freeze({
+  PENDING: "pending",
+  MEMBER: "member",
+  ROLLOVER: "rollover",
+});
+
 export const STATUS_CODES = Object.freeze({
   SUCCESS: 200,
   CREATED: 201,

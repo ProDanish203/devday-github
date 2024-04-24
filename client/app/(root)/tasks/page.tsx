@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { AddTask } from "@/components/forms";
 import { Trash } from "lucide-react";
 import { useAuth } from "@/store/AuthProvider";
+import { Heading } from "@/components/helpers";
 
 const Task = () => {
   return (
@@ -67,15 +68,11 @@ const TasksPage = () => {
   return (
     <section className="my-5">
       <div className="p-6 flex max-md:flex-col md:items-center gap-y-5 justify-between">
-        <div>
-          <h2 className="sm:text-4xl text-2xl text-text font-semibold mb-1">
-            Manage Tasks
-          </h2>
-          <p className="text-para text-sm w-full">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem,
-            dolore?
-          </p>
-        </div>
+        <Heading
+          title="Manage Tasks"
+          desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem,
+            dolore?"
+        />
       </div>
       <main className="flex-1 flex flex-col gap-4 p-4 md:gap-8 md:p-6">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

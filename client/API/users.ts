@@ -8,8 +8,8 @@ export const getUsers = async ({
 }: {
   page: number;
   limit: number;
-  search: string;
-  filter: string;
+  search?: string;
+  filter?: string;
 }) => {
   try {
     const { data } = await api.get(

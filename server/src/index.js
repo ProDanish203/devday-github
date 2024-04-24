@@ -9,6 +9,7 @@ import { errorMiddleware } from "./middlewares/error.middleware.js";
 // Routes
 import authRoute from "./routes/auth.route.js";
 import userRoute from "./routes/user.route.js";
+import projectRoute from "./routes/project.route.js";
 
 // .env config
 config();
@@ -16,11 +17,11 @@ config();
 const app = express();
 
 const corsOptions = {
-    credentials: true,
-    origin:
-        process.env.NODE_ENV === "production"
-            ? "https://github-devday.vercel.app"
-            : "http://localhost:3000",
+  credentials: true,
+  origin:
+    process.env.NODE_ENV === "production"
+      ? "https://github-devday.vercel.app"
+      : "http://localhost:3000",
 };
 
 app.use(cors(corsOptions));
@@ -33,29 +34,29 @@ app.use(cookieParser());
 app.disable("x-powered-by");
 
 app.get("/", (req, res) => {
-    res.status(200).json({
-        message: "Devday-github API",
-    })
-})
+  res.status(200).json({
+    message: "Devday-github API",
+  });
+});
 
 // Routes
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/project", projectRoute);
 
 // Custom middleware for errors
 app.use(errorMiddleware);
 
-
 const port = process.env.PORT || 5000;
 
 connDb()
-    .then(() => {
-        app.listen(port, () => {
-            console.log(`Server is listening live on port:${port}`);
-        });
-    })
-    .catch((error) => {
-        console.log(`Database Connection Error: ${error}`);
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is listening live on port:${port}`);
     });
+  })
+  .catch((error) => {
+    console.log(`Database Connection Error: ${error}`);
+  });
 
 export default app;

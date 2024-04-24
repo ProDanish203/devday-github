@@ -32,6 +32,7 @@ export default function RootLayout({
                   alt="Authentication"
                   width={1500}
                   height={1500}
+                  priority
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               </div>

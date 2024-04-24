@@ -189,7 +189,9 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
           <UserDropdown />
         </header>
 
-        {user && !user.isEmailVerified && <VerifyEmail />}
+        {user &&
+          !user.isEmailVerified &&
+          !pathname.includes("/verify-email") && <VerifyEmail />}
         {children}
       </div>
     </div>

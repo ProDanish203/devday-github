@@ -47,6 +47,10 @@ const UserSchema = new Schema(
       enum: Object.values(ROLES),
       default: ROLES.MEMBER,
     },
+    hasNotifications: {
+      type: Boolean,
+      default: false,
+    },
     country: String,
     phone: String,
     bio: String,

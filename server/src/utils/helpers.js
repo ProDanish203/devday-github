@@ -1,3 +1,4 @@
+import { Project } from "../models/project.model.js";
 import { User } from "../models/user.model.js";
 
 export const getPaginatedData = async ({
@@ -6,7 +7,7 @@ export const getPaginatedData = async ({
   limit = 10,
   query = {},
   populate = "",
-  select = "-password -refreshToken -forgotPasswordToken -forgotPasswordTokenExpiry -verifyToken -verifyTokenExpiry",
+  select = "-password -refreshToken -forgotPasswordToken -forgotPasswordTokenExpiry -verifyToken -verifyTokenExpiry -passCode",
   sort = { createdAt: -1 },
 }) => {
   const options = {
@@ -38,6 +39,31 @@ export const getPaginatedUsers = async ({ query, page, limit, sort }) => {
     page,
     limit,
     sort,
+  });
+
+  return { data, pagination };
+};
+
+export const getPaginatedProjects = async ({ query, page, limit, sort }) => {
+  const populate = [
+    {
+      path: "admin",
+      model: User,
+      select: "_id fullName username avatar",
+    },
+    {
+      path: "members.user",
+      model: User,
+      select: "_id fullName username avatar",
+    },
+  ];
+  const { data, pagination } = await getPaginatedData({
+    model: Project,
+    query: { ...query },
+    page,
+    limit,
+    sort,
+    populate,
   });
 
   return { data, pagination };

@@ -5,16 +5,8 @@ import { Searchbar, UserDropdown, VerifyEmail } from "@/components/helpers";
 import { useAuth } from "@/store/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Calendar,
-  ClipboardCheck,
-  GlobeLock,
-  Home,
-  Menu,
-  Settings,
-  Users,
-} from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
+import { Calendar, GlobeLock, Home, Menu, Settings, Users } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { Notifications } from "./Notifications";
 
 export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
@@ -62,16 +54,6 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
                 <Users className="size-4" />
                 Users
               </Link>
-              {/* <Link
-                className={`${
-                  pathname.includes("tasks") &&
-                  "bg-gray-100 text-gray-900 hover:text-gray-900"
-                } dashboard-link`}
-                href="/tasks"
-              >
-                <ClipboardCheck className="size-4" />
-                Tasks
-              </Link> */}
               <Link
                 className={`${
                   pathname.includes("settings") &&
@@ -150,16 +132,6 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
                   <Users className="size-4" />
                   Users
                 </Link>
-                {/* <Link
-                  className={`${
-                    pathname.includes("tasks") &&
-                    "bg-gray-100 text-gray-900 hover:text-gray-900"
-                  } dashboard-link`}
-                  href="/tasks"
-                >
-                  <ClipboardCheck className="size-4" />
-                  Tasks
-                </Link> */}
                 <Link
                   className={`${
                     pathname.includes("settings") &&

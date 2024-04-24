@@ -86,11 +86,11 @@ export const Notifications = () => {
           <span className="sr-only">Toggle notifications</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="bg-bg">
+      <SheetContent side="right" className="bg-bg max-xs:w-[320px]">
         <h2 className="text-white text-3xl font-semibold mb-4">
           Notifications
         </h2>
-        <div className="flex justify-center gap-y-2 flex-col">
+        <div className="flex justify-center gap-y-2 flex-col overflow-y-auto max-h-[90vh]">
           {isLoading ? (
             <div className="w-full h-full flex items-center justify-center">
               <Loader />

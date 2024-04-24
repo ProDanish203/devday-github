@@ -1,6 +1,7 @@
 import { User } from "../models/user.model.js";
 import { uploadFile } from "../utils/fileUpload.js";
 import { getPaginatedUsers } from "../utils/helpers.js";
+import { Notification } from "../models/notification.model.js";
 
 export const getCurrentUser = async (req, res, next) => {
   try {
@@ -132,6 +133,25 @@ export const readNotifcations = async (req, res, next) => {
       success: true,
       message: "Notifications read",
       data: "",
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+export const getNotifications = async (req, res, next) => {
+  try {
+    const notifications = await Notification.find({ to: req.user._id })
+      .populate("from", "_id name username avatar")
+      .populate("to", "_id name username avatar")
+      .lean()
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      message: "Notifications read",
+      data: notifications,
     });
   } catch (error) {
     console.log(error);

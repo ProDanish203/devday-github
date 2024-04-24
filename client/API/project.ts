@@ -186,3 +186,26 @@ export const getBranches = async (id: string) => {
     };
   }
 };
+
+export const rollBack = async ({
+  id,
+  branchId,
+}: {
+  id: string;
+  branchId: string;
+}) => {
+  try {
+    const { data } = await api.put(`/project/rollback-branch/${id}`, {
+      branchId,
+    });
+    return {
+      success: true,
+      response: data.data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      response: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};

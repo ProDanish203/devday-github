@@ -43,7 +43,7 @@ const SingleProject = ({ params }: { params: { id: string } }) => {
             data &&
             data.response.members.some(
               (member: any) =>
-                member.user._id === user._id && member.status === "pending"
+                member.user._id === user?._id && member.status === "pending"
             ) && <VerifyMember id={id} />}
         </div>
       )}

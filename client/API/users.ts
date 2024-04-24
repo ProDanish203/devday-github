@@ -28,3 +28,33 @@ export const getUsers = async ({
     };
   }
 };
+
+export const getNotifications = async () => {
+  try {
+    const { data } = await api.get(`/user/notifications`);
+    return {
+      success: true,
+      response: data.data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      response: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};
+
+export const readNotifications = async () => {
+  try {
+    const { data } = await api.put(`/user/read-notifications`);
+    return {
+      success: true,
+      response: data.data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      response: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};

@@ -253,3 +253,133 @@ export const verifyEmail = async (req, res, next) => {
     next(error);
   }
 };
+
+export const registerBulkUser = async (req, res, next) => {
+  try {
+    const users = [
+      {
+        username: "aliahmed",
+        email: "ali.ahmed@example.com",
+        password: "Abc12345%",
+        fullName: "Ali Ahmed",
+        role: "member",
+      },
+      {
+        username: "fatimakhan",
+        email: "fatima.khan@example.com",
+        password: "Abc12345%",
+        fullName: "Fatima Khan",
+        role: "member",
+      },
+      {
+        username: "mehranraza",
+        email: "mehran.raza@example.com",
+        password: "@Abc12345%",
+        fullName: "Mehran Raza",
+        role: "member",
+      },
+      {
+        username: "zainabiqbal",
+        email: "zainab.iqbal@example.com",
+        password: "Abc12345%",
+        fullName: "Zainab Iqbal",
+        role: "member",
+      },
+      {
+        username: "hassannawaz",
+        email: "hassan.nawaz@example.com",
+        password: "Abc12345%",
+        fullName: "Hassan Nawaz",
+        role: "member",
+      },
+      {
+        username: "sanaahmed",
+        email: "sana.ahmed@example.com",
+        password: "Abc12345%",
+        fullName: "Sana Ahmed",
+        role: "member",
+      },
+      {
+        username: "umairkhilji",
+        email: "umair.khilji@example.com",
+        password: "Abc12345%",
+        fullName: "Umair Khilji",
+        role: "member",
+      },
+      {
+        username: "aizaahmed",
+        email: "aiza.ahmed@example.com",
+        password: "Abc12345%",
+        fullName: "Aiza Ahmed",
+        role: "member",
+      },
+      {
+        username: "haiderali",
+        email: "haider.ali@example.com",
+        password: "Abc12345%",
+        fullName: "Haider Ali",
+        role: "member",
+      },
+      {
+        username: "manahilraza",
+        email: "manahil.raza@example.com",
+        password: "Abc12345%",
+        fullName: "Manahil Raza",
+        role: "member",
+      },
+      {
+        username: "saadkhan",
+        email: "saad.khan@example.com",
+        password: "Abc12345%",
+        fullName: "Saad Khan",
+        role: "member",
+      },
+      {
+        username: "ammarajmal",
+        email: "ammar.ajmal@example.com",
+        password: "Abc12345%",
+        fullName: "Ammar Ajmal",
+        role: "member",
+      },
+      {
+        username: "afshangul",
+        email: "afshan.gul@example.com",
+        password: "Abc12345%",
+        fullName: "Afshan Gul",
+        role: "member",
+      },
+      {
+        username: "danishraza",
+        email: "danish.raza@example.com",
+        password: "Abc12345%",
+        fullName: "Danish Raza",
+        role: "member",
+      },
+      {
+        username: "salihanawaz",
+        email: "salih.anawaz@example.com",
+        password: "Abc12345%",
+        fullName: "Salih Anawaz",
+        role: "member",
+      },
+    ];
+
+    for (const user of users) {
+      await User.create({
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        fullName: user.fullName,
+        role: user.role,
+      });
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: "Accounts created",
+      data: "",
+    });
+  } catch (error) {
+    next(error);
+  }
+};

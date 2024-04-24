@@ -3,6 +3,7 @@ import {
   deleteUser,
   getAllUsers,
   getCurrentUser,
+  getNotifications,
   getSingleUser,
   readNotifcations,
   updateProfile,
@@ -24,6 +25,11 @@ router.put(
   updateProfile
 );
 
+router.get(
+  "/notifications",
+  verifyAuth(Object.values(ROLES)),
+  getNotifications
+);
 router.put(
   "/read-notifications",
   verifyAuth(Object.values(ROLES)),

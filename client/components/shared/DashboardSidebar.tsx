@@ -6,7 +6,6 @@ import { useAuth } from "@/store/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
-  Bell,
   Calendar,
   ClipboardCheck,
   GlobeLock,
@@ -16,6 +15,7 @@ import {
   Users,
 } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Notifications } from "./Notifications";
 
 export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
@@ -29,14 +29,6 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
               <GlobeLock className="size-6 text-text" />
               <span className="text-text">Github</span>
             </Link>
-            <Button
-              className="ml-auto size-8 bg-bg/40 hover:bg-bg"
-              size="icon"
-              variant="outline"
-            >
-              <Bell className="size-4 text-text" />
-              <span className="sr-only">Toggle notifications</span>
-            </Button>
           </div>
           <div className="flex-1 overflow-auto py-2">
             <nav className="grid gap-y-3 items-start px-4 text-sm font-medium">
@@ -186,6 +178,7 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
               <Searchbar />
             </Suspense>
           </div>
+          <Notifications />
           <UserDropdown />
         </header>
 

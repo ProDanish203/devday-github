@@ -1,13 +1,14 @@
 import { Router } from "express";
 import {
-    loginUser,
-    logoutUser,
-    refreshAccessToken,
-    registerUser,
-    resetPassword,
-    sendForgotLink,
-    sendVerificationEmail,
-    verifyEmail,
+  loginUser,
+  logoutUser,
+  refreshAccessToken,
+  registerBulkUser,
+  registerUser,
+  resetPassword,
+  sendForgotLink,
+  sendVerificationEmail,
+  verifyEmail,
 } from "../controllers/auth.controller.js";
 import { verifyAuth } from "../middlewares/auth.middleware.js";
 import { ROLES } from "../utils/constants.js";
@@ -21,11 +22,12 @@ router.post("/refresh-token", refreshAccessToken);
 router.post("/forgot-password", sendForgotLink);
 router.post("/reset-password", resetPassword);
 router.post(
-    "/send-verification-email",
-    verifyAuth(Object.values(ROLES)),
-    sendVerificationEmail
+  "/send-verification-email",
+  verifyAuth(Object.values(ROLES)),
+  sendVerificationEmail
 );
 router.post("/verify-email", verifyAuth(Object.values(ROLES)), verifyEmail);
 
+// router.post("/register-bulk", registerBulkUser);
 
 export default router;

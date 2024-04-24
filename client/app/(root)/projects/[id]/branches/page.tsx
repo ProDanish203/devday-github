@@ -1,10 +1,11 @@
 "use client";
 import { getBranches, getProject } from "@/API/project";
+import { Rollover } from "@/components/forms";
 import { Heading, Loader } from "@/components/helpers";
-import { ProjectSkeleton } from "@/components/skeletons";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/store/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 interface Branch {
   _id: string;
@@ -15,7 +16,7 @@ interface Branch {
   by: {
     _id: string;
     username: string;
-    name: string;
+    fullName: string;
     avatar?: {
       url: string;
       public_id: string;
@@ -26,20 +27,25 @@ interface Branch {
 const BranchCard = ({
   branch,
   isAdmin,
+  parent,
 }: {
   branch: Branch;
   isAdmin: boolean;
+  parent: string;
 }) => {
   return (
-    <div className="flex items-center justify-between bg-neutral-900 rounded-lg md:max-w-[80%] p-4">
+    <div className="flex md:items-center md:justify-between bg-neutral-900 rounded-lg md:max-w-[80%] p-4 max-md:flex-col max-md:gap-y-4">
       <p className="text-white text-sm">
         Branch created by: @{branch.by.username} on {branch.branch.createdAt}
       </p>
-      {isAdmin && (
-        <Button className="bg-white hover:bg-white/90 text-bg ">
-          Rollover
-        </Button>
-      )}
+      <div className="flex items-center gap-x-2">
+        <Link href={`/projects/${branch.branch._id}`} className="w-full">
+          <Button className="bg-white hover:bg-white/90 text-bg max-sm:w-full">
+            View
+          </Button>
+        </Link>
+        {isAdmin && <Rollover id={parent} branchId={branch.branch._id} />}
+      </div>
     </div>
   );
 };
@@ -77,6 +83,7 @@ const AllBranches = ({ params }: { params: { id: string } }) => {
                     branch={branch}
                     isAdmin={user._id === data.response.admin._id}
                     key={branch._id}
+                    parent={id}
                   />
                 ))}
             </main>

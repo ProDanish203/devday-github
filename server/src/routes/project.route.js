@@ -26,6 +26,6 @@ router.put("/add-members/:id", addMembers);
 router.put("/verify-member/:id", verifyMember);
 router.post("/create-branch/:id", createNewBranch);
 router.get("/all-branches/:id", getAllBranches);
-
+router.put("/rollback-branch/:id", rollbackTo);
 
 export default router;

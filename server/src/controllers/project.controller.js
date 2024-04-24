@@ -68,7 +68,7 @@ export const getAllProjects = async (req, res, next) => {
     const projects = await getPaginatedProjects({
       query: {
         name: { $regex: `^${search}`, $options: "i" },
-        parentId: { $exists: false },
+        $or: [{ parentId: null }, { parentId: { $exists: false } }],
       },
       page,
       limit,
@@ -109,7 +109,7 @@ export const getMyProjects = async (req, res, next) => {
           },
         ],
         name: { $regex: `^${search}`, $options: "i" },
-        parentId: { $exists: false },
+        $or: [{ parentId: null }, { parentId: { $exists: false } }],
       },
       page,
       limit,
@@ -361,6 +361,40 @@ export const createBackup = async (req, res, next) => {
 
 export const rollbackTo = async (req, res, next) => {
   try {
+    const { id } = req.params;
+    const { branchId } = req.body;
+    const project = await Project.findById(id);
+    const branch = await Project.findById(branchId);
+    if (!project) return next("No project found");
+    if (!branch) return next("No branch found");
+
+    branch.parentId = null;
+    await branch.save();
+
+    project.parentId = branch._id;
+    await project.save();
+
+    // Notify the admin
+    await Notification.create({
+      from: req.user._id,
+      to: project.admin,
+      content: `A rollover has been performed by: @${req.user.username} in ${project.name}.`,
+    });
+
+    // Update user hasNotification field
+    await User.findByIdAndUpdate(
+      project.admin,
+      {
+        hasNotifications: true,
+      },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Rollback success",
+      data: branch,
+    });
   } catch (error) {
     console.log(error);
     next(error);

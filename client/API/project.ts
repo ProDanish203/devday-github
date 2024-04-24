@@ -148,3 +148,41 @@ export const createProject = async ({
     };
   }
 };
+
+export const createBranch = async ({
+  id,
+  content,
+}: {
+  content: string;
+  id: string;
+}) => {
+  try {
+    const { data } = await api.post(`/project/create-branch/${id}`, {
+      content,
+    });
+    return {
+      success: true,
+      response: data.data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      response: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};
+
+export const getBranches = async (id: string) => {
+  try {
+    const { data } = await api.get(`/project/all-branches/${id}`);
+    return {
+      success: true,
+      response: data.data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      response: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};

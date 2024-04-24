@@ -52,7 +52,7 @@ const ProjectSchema = new Schema(
     },
     children: [
       {
-        parent: {
+        branch: {
           type: Schema.Types.ObjectId,
           ref: "Project",
         },

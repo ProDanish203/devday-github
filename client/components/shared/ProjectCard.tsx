@@ -26,13 +26,12 @@ export const ProjectCard = ({ data }: { data: ProjectTypes }) => {
           {data.members &&
             data.members.length > 0 &&
             data.members.map((member) => (
-              <>
+              <div key={member.user._id}>
                 {member.status !== "pending"}
                 <UserAvatar
                   src={member.user.avatar?.url || "/images/user.webp"}
-                  key={member._id}
                 />
-              </>
+              </div>
             ))}
         </div>
         <Link href={`projects/${data._id}`}>

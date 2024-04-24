@@ -2,7 +2,9 @@ import { Router } from "express";
 import {
   addMembers,
   createBackup,
+  createNewBranch,
   createProject,
+  getAllBranches,
   getAllProjects,
   getMyProjects,
   getSingleProject,
@@ -22,5 +24,8 @@ router.get("/my-projects", getMyProjects);
 
 router.put("/add-members/:id", addMembers);
 router.put("/verify-member/:id", verifyMember);
+router.post("/create-branch/:id", createNewBranch);
+router.get("/all-branches/:id", getAllBranches);
+
 
 export default router;

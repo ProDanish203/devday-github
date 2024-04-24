@@ -66,7 +66,10 @@ export const getAllProjects = async (req, res, next) => {
     }
 
     const projects = await getPaginatedProjects({
-      query: { name: { $regex: `^${search}`, $options: "i" } },
+      query: {
+        name: { $regex: `^${search}`, $options: "i" },
+        parentId: { $exists: false },
+      },
       page,
       limit,
       sort: { name: sortDirection },
@@ -100,11 +103,13 @@ export const getMyProjects = async (req, res, next) => {
         $or: [
           { admin: req.user._id },
           {
-            "members.user": req.user._id,
-            "members.status": { $ne: "pending" },
+            members: {
+              $elemMatch: { user: req.user._id },
+            },
           },
         ],
         name: { $regex: `^${search}`, $options: "i" },
+        parentId: { $exists: false },
       },
       page,
       limit,
@@ -241,6 +246,104 @@ export const verifyMember = async (req, res, next) => {
       success: true,
       message: "Member status updated",
       data: project,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+export const createNewBranch = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { content } = req.body;
+    if (!content) return next("Project content is required");
+
+    const project = await Project.findById(id);
+    if (!project) return next("No project found");
+
+    const isAuthorized =
+      project.admin.toString() === req.user._id.toString() ||
+      project.members.some(
+        (member) =>
+          member.user.toString() === req.user._id.toString() &&
+          member.status !== "pending"
+      );
+
+    if (!isAuthorized)
+      return next("You are not authorized to perform this action");
+
+    const newProject = await Project.create({
+      content,
+      name: project.name,
+      desc: project.desc,
+      passCode: project.passCode,
+      admin: project.admin,
+      members: project.members,
+      parentId: project._id,
+    });
+    if (!newProject) return next("An error occured while updating the project");
+
+    // Update the parent project
+    project.children.push({
+      branch: newProject._id,
+      by: req.user._id,
+    });
+    await project.save();
+
+    // Notify the admin
+    await Notification.create({
+      from: req.user._id,
+      to: project.admin,
+      content: `A new branch has been created by: @${req.user.username} in ${project.name}.`,
+    });
+
+    // Update user hasNotification field
+    await User.findByIdAndUpdate(
+      project.admin,
+      {
+        hasNotifications: true,
+      },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "New branch created",
+      data: newProject,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+export const getAllBranches = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const branches = await Project.findById(id)
+      .populate({
+        path: "children.by",
+        model: User,
+        select: "_id fullName username avatar",
+      })
+      .populate({
+        path: "children.branch",
+        model: Project,
+        select: "_id createdAt",
+      })
+      .populate({
+        path: "admin",
+        model: User,
+        select: "_id fullName username avatar",
+      })
+      .select("-members -tasks -passCode -content")
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      message: "My projects",
+      data: branches,
     });
   } catch (error) {
     console.log(error);

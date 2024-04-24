@@ -3,7 +3,7 @@ import { getAllProjects } from "@/API/project";
 import { AddProject } from "@/components/forms";
 import { Filter, Heading, Pagination } from "@/components/helpers";
 import { ProjectCard } from "@/components/shared";
-import { UserSkeleton } from "@/components/skeletons";
+import { ProjectSkeleton, UserSkeleton } from "@/components/skeletons";
 import { ProjectTypes } from "@/lib/types";
 import { useAuth } from "@/store/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
@@ -43,9 +43,9 @@ const ProjectsPage = ({ searchParams }: SearchParams) => {
             {user && user.role === "admin" && <AddProject />}
           </div>
         </div>
-        <main className="flex-[0.5] -mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        <main className="flex-[0.5] -mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-6">
           {isLoading ? (
-            <UserSkeleton />
+            <ProjectSkeleton />
           ) : data &&
             data.success &&
             data.response &&

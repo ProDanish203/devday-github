@@ -39,7 +39,7 @@ const UserPage = ({ searchParams }: SearchParams) => {
           </div>
         </div>
         <div className=""></div>
-        <main className="flex-[0.5] -mt-5 flex items-center flex-wrap  gap-6 p-6">
+        <main className="flex-[0.5] -mt-5 flex items-center flex-wrap gap-6 p-6">
           {isLoading ? (
             <UserSkeleton />
           ) : data &&

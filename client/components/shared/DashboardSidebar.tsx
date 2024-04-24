@@ -62,7 +62,7 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
                 <Users className="size-4" />
                 Users
               </Link>
-              <Link
+              {/* <Link
                 className={`${
                   pathname.includes("tasks") &&
                   "bg-gray-100 text-gray-900 hover:text-gray-900"
@@ -71,7 +71,7 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
               >
                 <ClipboardCheck className="size-4" />
                 Tasks
-              </Link>
+              </Link> */}
               <Link
                 className={`${
                   pathname.includes("settings") &&
@@ -150,7 +150,7 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
                   <Users className="size-4" />
                   Users
                 </Link>
-                <Link
+                {/* <Link
                   className={`${
                     pathname.includes("tasks") &&
                     "bg-gray-100 text-gray-900 hover:text-gray-900"
@@ -159,7 +159,7 @@ export const DashboardSidebar = ({ children }: { children: ReactNode }) => {
                 >
                   <ClipboardCheck className="size-4" />
                   Tasks
-                </Link>
+                </Link> */}
                 <Link
                   className={`${
                     pathname.includes("settings") &&

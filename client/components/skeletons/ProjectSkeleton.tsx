@@ -13,7 +13,7 @@ export const ProjectSkeleton = () => {
               <Skeleton className="h-6 w-[100px] bg-neutral-300" />
               <Skeleton className="h-6 w-[70px] bg-neutral-300" />
             </div>
-            <Skeleton className="h-3 w-[350px] bg-neutral-300 mt-5" />
+            <Skeleton className="h-3 xl:w-[280px] w-[200px] bg-neutral-300 mt-5" />
           </div>
           <div className="border-t dark:border-gray-800 px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">

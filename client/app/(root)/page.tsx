@@ -5,6 +5,7 @@ import { Filter, Heading, Pagination } from "@/components/helpers";
 import { ProjectCard } from "@/components/shared";
 import { ProjectSkeleton, UserSkeleton } from "@/components/skeletons";
 import { ProjectTypes } from "@/lib/types";
+import { useAuth } from "@/store/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import { Suspense } from "react";
 
@@ -18,6 +19,7 @@ interface SearchParams {
 }
 
 export default function Dashboard({ searchParams }: SearchParams) {
+  const { user } = useAuth();
   const { page, limit, search, filter } = searchParams;
 
   const { data, isLoading } = useQuery({
@@ -38,7 +40,7 @@ export default function Dashboard({ searchParams }: SearchParams) {
             <Suspense fallback={<p>...</p>}>
               <Filter />
             </Suspense>
-            <AddProject />
+            {user && user.role === "admin" && <AddProject />}
           </div>
         </div>
         <main className="flex-[0.5] -mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">

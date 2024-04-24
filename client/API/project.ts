@@ -81,7 +81,7 @@ export const addMembers = async ({
   users: string[];
 }) => {
   try {
-    const { data } = await api.put(`/project/add-member/${id}`, {
+    const { data } = await api.put(`/project/add-members/${id}`, {
       users,
     });
     return {
@@ -104,7 +104,37 @@ export const verifyMember = async ({
   passCode: string;
 }) => {
   try {
-    const { data } = await api.put(`/project/add-member/${id}`, {
+    const { data } = await api.put(`/project/verify-member/${id}`, {
+      passCode,
+    });
+    return {
+      success: true,
+      response: data.data,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      response: error?.response?.data?.message || "Something went wrong",
+    };
+  }
+};
+
+export const createProject = async ({
+  name,
+  desc,
+  content,
+  passCode,
+}: {
+  name: string;
+  desc: string;
+  content: string;
+  passCode: string;
+}) => {
+  try {
+    const { data } = await api.post(`/project/create`, {
+      name,
+      desc,
+      content,
       passCode,
     });
     return {

@@ -16,7 +16,9 @@ export const ProjectCard = ({ data }: { data: ProjectTypes }) => {
           </Badge>
         </div>
         <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-          {data.desc}
+          {data.desc.length > 100
+            ? `${data.desc.substring(0, 100)}...`
+            : data.desc}
         </p>
       </div>
       <div className="border-t dark:border-gray-800 px-4 py-3 flex items-center justify-between">

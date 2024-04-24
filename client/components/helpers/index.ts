@@ -1,3 +1,4 @@
+import { Loader } from './Loader';
 import { Heading } from "./Heading";
 import { Pagination } from "./Pagination";
 import { Filter } from "./Filter";
@@ -18,4 +19,5 @@ export {
   Filter,
   Pagination,
   Heading,
+  Loader
 };

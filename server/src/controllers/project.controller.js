@@ -100,16 +100,22 @@ export const getMyProjects = async (req, res, next) => {
 
     const projects = await getPaginatedProjects({
       query: {
-        $or: [
-          { admin: req.user._id },
+        $and: [
           {
-            members: {
-              $elemMatch: { user: req.user._id },
-            },
+            $or: [
+              { admin: req.user._id },
+              {
+                members: {
+                  $elemMatch: { user: req.user._id },
+                },
+              },
+            ],
+          },
+          {
+            $or: [{ parentId: null }, { parentId: { $exists: false } }],
           },
         ],
         name: { $regex: `^${search}`, $options: "i" },
-        $or: [{ parentId: null }, { parentId: { $exists: false } }],
       },
       page,
       limit,

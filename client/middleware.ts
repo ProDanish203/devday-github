@@ -29,5 +29,13 @@ export const config = {
     "/forgot-password",
     "/reset-password",
     "/",
+    "/verify-email",
+    "/settings",
+    "/users",
+    "/projects",
+    "/projects/create",
+    "/projects/:id",
+    "/projects/:id/bracnhes",
+    "/projects/:id/update",
   ],
 };
